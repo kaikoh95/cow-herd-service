@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+
+  database:
+    container_name: psql
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - ./volumes/postgres-data/postgres:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  server:
+    container_name: server
+    build: .
+    ports:
+      - 5000:5000
+    volumes:
+      - .:/app
+    restart: always
+    depends_on:
+      - database
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - ENV=${ENV}
+    networks:
+      - backend
+
+networks:
+  backend:
