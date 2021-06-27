@@ -96,22 +96,8 @@ def create_app():
         out = {'error': message}
         return out, 404
 
-    @app.errorhandler(405)
-    def method_not_allowed(error):
-        error = vars(error)
-        message = "The method is not allowed for the requested URL."
-        if error.get("data") and error.get("data").get('error'):
-            message = error["data"]["error"]
-        out = {'error': message}
-        return out, 405
-
-    @app.errorhandler(500)
-    def internal_server(error):
-        error = vars(error)
-        message = "Internal Server Error, please try again."
-        if error.get("data") and error.get("data").get('error'):
-            message = error["data"]["error"]
-        out = {'error': message}
-        return out, 500
+    # Api Error Handlers
+    from app.config.app_error_handlers import app_error_handlers
+    app_error_handlers(app)
 
     return app
