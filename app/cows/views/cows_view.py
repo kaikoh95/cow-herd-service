@@ -3,11 +3,13 @@ from flask import jsonify, make_response
 from app.cows.helpers.cow_common_helpers import CowCommonHelpers
 from app.cows.schemas.cow_schemas import CowRequestSchema
 from app.helpers.common_helpers import process_request_body
+from app.services.cache.cache import cache
 
 
 class CowsView(Resource):
     """Contains methods for reading/creating Cows endpoint."""
 
+    @cache.cached(key_prefix='get_all_cows')
     def get(self):
         """
         Gets all Cows
