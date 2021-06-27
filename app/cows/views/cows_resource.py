@@ -3,6 +3,7 @@ from app.cows.schemas.cow_schemas import CowRequestSchema, CowSchema
 from app.helpers.common_helpers import process_request_body
 from flask_apispec.views import MethodResource
 from flask_apispec import marshal_with, doc, use_kwargs
+from app.services.cache.cache import cache
 
 
 class CowsResource(MethodResource):
@@ -10,6 +11,7 @@ class CowsResource(MethodResource):
 
     @doc(description='Gets all Cows that are currently in the database.', tags=['Cows'])
     @marshal_with(CowSchema(many=True), description="A list of Cows.", code=200)
+    @cache.cached(key_prefix='get_all_cows')
     def get(self, **kwargs):
         cows = CowCommonHelpers.get_all_cows()
         return CowSchema(many=True).dump(cows), 200
