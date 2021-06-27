@@ -36,23 +36,23 @@ def create_app():
     app.config.from_object(settings)
 
     # REST API Resource Views
-    from app.cows.views.cows_view import CowsView
-    from app.cows.views.single_cow_view import SingleCowView
+    from app.cows.views.cows_resource import CowsResource
+    from app.cows.views.single_cow_resource import SingleCowResource
 
     # cows_view = CowsView.as_view("CowsView")
     # app.add_url_rule('/cows', view_func=cows_view)
-    api.add_resource(CowsView, '/cows')
+    api.add_resource(CowsResource, '/cows')
 
     # single_cow_view = SingleCowView.as_view("SingleCowView")
     # app.add_url_rule('/cows/<id>', view_func=single_cow_view)
-    api.add_resource(SingleCowView, '/cows/<id>')
+    api.add_resource(SingleCowResource, '/cows/<id>')
 
     # Register specs
     with app.test_request_context():
         # spec.path(view=cows_view)
         # spec.path(view=single_cow_view)
-        docs.register(CowsView)
-        docs.register(SingleCowView)
+        docs.register(CowsResource)
+        docs.register(SingleCowResource)
 
     # Register schemas
     # from app.cows.schemas.cow_schemas import CowSchema, LocationSchema, CowRequestSchema
