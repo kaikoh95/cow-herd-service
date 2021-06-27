@@ -27,11 +27,18 @@ services:
     restart: always
     depends_on:
       - database
-    environment:
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_NAME=${DB_NAME}
-      - ENV=${ENV}
+    env_file:
+      - .env
+    networks:
+      - backend
+
+  redis:
+    container_name: redis
+    image: redis
+    depends_on:
+      - server
+    ports:
+      - 6379:6379
     networks:
       - backend
 
