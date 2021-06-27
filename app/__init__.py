@@ -1,4 +1,3 @@
-import os
 from flask import Flask, request
 from flask_restful_swagger_2 import Api
 from flask_cors import CORS
@@ -32,8 +31,19 @@ def create_app():
     docs = FlaskApiSpec(app)
 
     # App environment config
-    settings = os.getenv('SETTING', 'app.config.base.BaseConfig')
-    app.config.from_object(settings)
+    from app.config.base import BaseConfig
+    from app.config.cache import CacheConfig
+    from app.config.db import DbConfig
+    from app.config.redis import RedisConfig
+
+    app.config.from_object(BaseConfig)
+    app.config.from_object(DbConfig)
+    app.config.from_object(RedisConfig)
+    app.config.from_object(CacheConfig)
+
+    # Flask Caching
+    from app.services.cache.cache import FlaskCache
+    FlaskCache(app)
 
     # REST API Resource Views
     from app.cows.views.cows_resource import CowsResource
