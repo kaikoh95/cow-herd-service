@@ -16,7 +16,6 @@ def set_request_hash(*args, **kwargs):
     print(f"""-----
     Incoming Request Payload
         {environ.get("REQUEST_METHOD")}  {environ.get("PATH_INFO")}
-        Store Hash: {request.headers.get("store-hash", "Not present")}
         Query: {environ.get("QUERY_STRING")}
         Body: {request.get_data().decode('utf-8')}
         View Function: {request.endpoint} 
