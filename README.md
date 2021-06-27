@@ -1,5 +1,7 @@
 # Cow Herd Service
 This is a REST API service written in Python Flask to manage Cows as part of the assessment for Halter, New Zealand.
+The API methods are written in a self-documenting format such that Swagger docs are generated automatically via the related 
+schemas and doc strings.
 
 ## Usage
 Ensure that you have [Docker](https://www.docker.com/) installed in your host machine before trying to run the application.

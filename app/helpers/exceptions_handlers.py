@@ -29,7 +29,7 @@ def exception_handler(func):
                 message = "Database Error: Duplicated fields found when saving item to db"
             abort(BAD_REQUEST, error=f"{message} - {str(e)}")
         except Exception as e:
-            error = f"{str(e)} in {func.__qualname__}"
+            error = f"Exception in {func.__qualname__} - {str(e)}"
             current_app.logger.error(error)
             abort(BAD_REQUEST, error=error)
     return wrapper
