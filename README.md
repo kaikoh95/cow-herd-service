@@ -11,7 +11,7 @@ Ensure that you have [Docker](https://www.docker.com/) installed in your host ma
 ```
 $ git clone https://github.com/kaikoh95/cow-herd-service.git
 $ cd cow-herd-service
-$ docker-compose up
+$ docker-compose up --build
 ```
 Now redirect to http://localhost:5000.
 
